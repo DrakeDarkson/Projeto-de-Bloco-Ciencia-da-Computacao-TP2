@@ -1,0 +1,17 @@
+FROM fedora:latest
+
+WORKDIR /app
+
+COPY . /app
+
+RUN dnf update -y && dnf install -y \
+    python3 \
+    python3-pip \
+    gcc \
+    python3-devel \
+    && dnf clean all
+
+COPY requirements.txt /app/
+RUN pip install --no-cache-dir -r requirements.txt
+
+CMD ["python3", "download_async.py"]
